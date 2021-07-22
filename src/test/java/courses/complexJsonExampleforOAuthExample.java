@@ -1,6 +1,6 @@
-package courses;
+ package courses;
 
-public class complexJsonExample {
+public class complexJsonExampleforOAuthExample {
 
     private String instructor;
     private String url;

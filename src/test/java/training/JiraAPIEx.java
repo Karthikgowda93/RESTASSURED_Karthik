@@ -13,6 +13,8 @@ import static io.restassured.RestAssured.given;
 
 public class JiraAPIEx {
 
+
+    // can only run where JIRA configured (in personal lap)
     @BeforeTest
     public static void setUp() {
 
@@ -67,10 +69,11 @@ public class JiraAPIEx {
         String expectedComment= js.getString("body");
 
 
-        // to add the attachmenmts there is one more command "multipart" and header have to pass as "multipart/form-data" whenever adding
+        // to add the attachments there is one more command "multipart" and in header have to pass as "multipart/form-data" whenever adding
         // attachment in the api
 
-        given().header("X-Atlassian-Token","no-check").header("Content-Type","multipart/form-data") // whenever multipart method used have to send this header
+        given().header("X-Atlassian-Token","no-check")
+                .header("Content-Type","multipart/form-data") // whenever multipart method used have to send this header
                 .multiPart("file",new File("attachment.txt"))   // this is the method used to send the attachment in Rest Api
                 .filter(session)
                 .pathParam("IssueID","10101")
@@ -80,8 +83,9 @@ public class JiraAPIEx {
 
         // get the issue using the path and query param
 
-        String getIssueResponse = given().filter(session).pathParam("IssueID", "10101")
-                .queryParam("fields", "comment")
+        String getIssueResponse = given().filter(session)
+                .pathParam("IssueID", "10101")
+                .queryParam("fields", "comment") // added here to get only "comment" field in the API response
                 .when()
                 .get("/rest/api/2/issue/{IssueID}")
                 .then().log().body().assertThat().statusCode(200).extract().response().asString();

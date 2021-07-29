@@ -7,6 +7,7 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.internal.common.assertion.Assertion;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
@@ -44,7 +45,7 @@ public class GoogleAPI {
         gap.setName("Frontline house");
         gap.setPhone_number("(+91) 983 893 3937");
         gap.setAddress("29, side layout, cohen 09");
-        gap.getWebsite("http://google.com");
+        gap.setWebsite("http://google.com");
         gap.setLanguage("French-IN");
         location l = new location();
         l.setLat(-38.383494);
@@ -80,6 +81,9 @@ public class GoogleAPI {
                 .then()
                 .extract().response();
         System.out.println(response1.asString());
+        String resp=response1.asString();
+        JsonPath jp = new JsonPath(resp);
+        System.out.println(jp.getString("scope"));
 
 
 

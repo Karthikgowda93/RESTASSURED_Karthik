@@ -65,7 +65,7 @@ public class GoogleApiproduct {
         this.address = address;
     }
 
-    public String getWebsite(String s) {
+    public String getWebsite() {
         return website;
     }
 
